@@ -8,13 +8,23 @@ file_path = os.path.join(script_dir, "accounts.txt")
 def register():
     print("--- Account Registration ---")
     while True:
+        # register username
         reg_username = input('Your Username: ').strip()
-        reg_amount = input('Your first deposit: ')
-        reg_password = input('Your password (min. 6  characters): ')
-
+        
         if len(reg_username) == 0:
             print("Username can't be blank. Please try again.\n")
             continue
+        
+        # register amount
+        reg_amount = input('Your first deposit: ')
+        
+        try:
+            reg_amount = float(reg_amount)
+        except ValueError:
+            print("Amount should be a number.\n")
+            continue
+        
+        reg_password = input('Your password (min. 6  characters): ')
         
         if len(reg_password) < 6:
             print("Password too short! It must be at least 6 characters.\n")
@@ -23,8 +33,8 @@ def register():
         print("Registration successful!")
         break
         
-    with open(file_path, 'w', encoding='utf-8') as file:
-        pass
+    with open(file_path, 'a', encoding='utf-8') as file:
+        file.write(f"{reg_username}, {reg_amount:.2f}, {reg_password}")
 
 def main_screen():
     while True:
